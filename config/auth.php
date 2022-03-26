@@ -107,5 +107,5 @@ return [
     */
 
     'password_timeout' => 10800,
-
+    'hash_token'=> env('APP_HASH_TOKEN','tannguyen95')
 ];
