@@ -16,14 +16,14 @@ use App\Http\Controllers\ProductController;
 |
 */
 
-Route::group(['middleware' => 'auth:api'], function () {
+Route::group(['middleware' => 'api'], function () {
     Route::prefix('item')->group(function () {
         Route::post('add', [ProductController::class, 'create']);
         Route::post('update', [ProductController::class, 'update']);
         Route::post('delete', [ProductController::class, 'delete']);
         Route::post('search', [ProductController::class, 'search']);
     });
-    Route::post('items', [ProductController::class, 'list']);
+    Route::get('items', [ProductController::class, 'list']);
 });
 
 Route::post("auth/login", [AuthController::class, 'login']);
