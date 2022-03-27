@@ -5,9 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 
+/**
+ * Class ProductController
+ *
+ * @package App\Http\Controllers
+ */
 class ProductController extends Controller
 {
-    //
     public function create(Request $request)
     {
         $request->validate([
@@ -72,9 +76,18 @@ class ProductController extends Controller
             'message' => ['Something is wrong.']
         ], 500);
     }
-    public function list(Request $request)
+    public function list()
     {
         $products = Product::all();
+        $response = [
+            'products' => $products,
+        ];
+        return response($response, 200);
+    }
+    public function search(Request $request)
+    {
+        $sku = $request->sku ? $request->sku : '';
+        $products = Product::where('sku', 'like', '%' . $sku . '%')->get();
         $response = [
             'products' => $products,
         ];

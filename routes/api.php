@@ -17,12 +17,10 @@ use App\Http\Controllers\ProductController;
 */
 
 Route::group(['middleware' => 'api'], function () {
-    Route::prefix('item')->group(function () {
-        Route::post('add', [ProductController::class, 'create']);
-        Route::post('update', [ProductController::class, 'update']);
-        Route::post('delete', [ProductController::class, 'delete']);
-        Route::post('search', [ProductController::class, 'search']);
-    });
+    Route::post('item/add', [ProductController::class, 'create']);
+    Route::post('item/update', [ProductController::class, 'update']);
+    Route::post('item/delete', [ProductController::class, 'delete']);
+    Route::post('item/search', [ProductController::class, 'search']);
     Route::get('items', [ProductController::class, 'list']);
 });
 
