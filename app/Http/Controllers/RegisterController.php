@@ -21,13 +21,13 @@ class RegisterController extends Controller
         ];
         $user = User::create($data);
         if (!$user) {
-            return response([
+            return response()->json([
                 'message' => ['Something is wrong.']
             ], 500);
         }
         $response = [
             'user' => $user,
         ];
-        return response($response, 201);
+        return response()->json($response, 201);
     }
 }

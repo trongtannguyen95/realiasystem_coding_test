@@ -16,7 +16,9 @@ use App\Http\Controllers\ProductController;
 |
 */
 
-Route::group(['middleware' => 'api'], function () {
+Route::group([
+    'middleware' => 'api'
+], function () {
     Route::post('item/add', [ProductController::class, 'create']);
     Route::post('item/update', [ProductController::class, 'update']);
     Route::post('item/delete', [ProductController::class, 'delete']);

@@ -12,6 +12,10 @@ use App\Models\Product;
  */
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
     public function create(Request $request)
     {
         $request->validate([
@@ -22,14 +26,14 @@ class ProductController extends Controller
         $data = $request->all();
         $product = Product::create($data);
         if (!$product) {
-            return response([
+            return response()->json([
                 'message' => ['Something is wrong.']
             ], 500);
         }
         $response = [
             'product' => $product,
         ];
-        return response($response, 201);
+        return response()->json($response, 201);
     }
     public function update(Request $request)
     {
@@ -42,7 +46,7 @@ class ProductController extends Controller
         $data = $request->except('sku');
         $product = Product::where('sku', $sku)->first();
         if (!$product) {
-            return response([
+            return response()->json([
                 'message' => ['SKU not found']
             ], 500);
         }
@@ -50,7 +54,7 @@ class ProductController extends Controller
             $response = [
                 'product' => $product,
             ];
-            return response($response, 200);
+            return response()->json($response, 200);
         }
     }
     public function delete(Request $request)
@@ -70,9 +74,9 @@ class ProductController extends Controller
                 'message' => 'deleted product #' . $sku . '',
 
             ];
-            return response($response, 200);
+            return response()->json($response, 200);
         }
-        return response([
+        return response()->json([
             'message' => ['Something is wrong.']
         ], 500);
     }
@@ -82,7 +86,7 @@ class ProductController extends Controller
         $response = [
             'products' => $products,
         ];
-        return response($response, 200);
+        return response()->json($response, 200);
     }
     public function search(Request $request)
     {
@@ -91,6 +95,6 @@ class ProductController extends Controller
         $response = [
             'products' => $products,
         ];
-        return response($response, 200);
+        return response()->json($response, 200);
     }
 }

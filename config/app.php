@@ -176,7 +176,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        PHPOpenSourceSaver\JWTAuth\Providers\LaravelServiceProvider::class,
     ],
 
     /*
@@ -191,6 +191,8 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
+        'JWTAuth' => PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth::class,
+        'JWTFactory' => PHPOpenSourceSaver\JWTAuth\Facades\JWTFactory::class,
         // ...
     ])->toArray(),
 
