@@ -13,27 +13,6 @@ class AuthController extends Controller
         $this->middleware('auth:api', ['except' => ['login']]);
     }
 
-    //
-    // public function login(Request $request)
-    // {
-    //     $request->validate([
-    //         'email' => 'required|email',
-    //         'password' => 'required'
-    //     ]);
-    //     $user = User::where('email', $request->email)->first();
-    //     if (!$user || !Hash::check($request->password, $user->password)) {
-    //         return response([
-    //             'message' => ['These credentials do not match our records.']
-    //         ], 401);
-    //     }
-    //     $user->tokens()->delete();
-    //     $token = $user->createToken(config('auth.hash_token'))->plainTextToken;
-    //     $response = [
-    //         'user' => $user,
-    //         'token' => $token
-    //     ];
-    //     return response($response, 201);
-    // }
     public function login(Request $request)
     {
         $request->validate([
@@ -44,8 +23,8 @@ class AuthController extends Controller
         if (!$token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-
-        return $this->respondWithToken($token);
+        $user = User::where('email',$request->email)->first();
+        return $this->respondWithToken($token, $user);
     }
     /**
      * Get the authenticated User.
@@ -76,9 +55,10 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function respondWithToken($token)
+    protected function respondWithToken($token, $user)
     {
         return response()->json([
+            'user' => $user,
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60
